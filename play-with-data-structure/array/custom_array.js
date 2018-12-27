@@ -51,6 +51,73 @@ class CustomArray {
     this.add(this.size, e);
   }
 
+  // 获取index位置处的元素
+  get(index) {
+    if (index < 0 || index >= this.size) {
+      throw new Error(`You should enter a valid index no less than 0 and less than ${this.size}.`);
+    }
+    return this.data[index];
+  }
+
+  // 修改index位置处的元素
+  set(index, value) {
+    if (index < 0 || index >= this.size) {
+      throw new Error(`You should enter a valid index no less than 0 and less than ${this.size}.`);
+    }
+    this.data[index] = value;
+  }
+
+  // 查找数组中是否有元素e
+  contains(e) {
+    for (let i = 0; i < this.size; i++) {
+      if (this.data[i] === e) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // 查找数组中元素e所在索引，如果不存在元素e，则返回-1
+  find(e) {
+    for (let i = 0; i < this.size; i++) {
+      if (this.data[i] === e) {
+        return i;
+      }
+    }
+    return -1;
+  }
+  
+  // 从数组中删除index位置的元素，返回删除的元素
+  remove(index) {
+    if (index < 0 || index >= this.size) {
+      return `You should enter a valid index no less than 0 and less than ${this.size}.`;
+    }
+    const result = this.data[index];
+    for (let i = index; i < this.size - 1; i++) {
+      this.data[i] = this.data[i + 1];
+    }
+    this.size--;
+    return result;
+  }
+  // 从数组中移除第一个元素
+  removeFirst() {
+    this.remove(0);
+  }
+  // 从数组中移除最后一个元素
+  removeLast() {
+    this.remove(this.size - 1);
+  }
+  // 从数组中移除指定元素
+  removeElement(e) {
+    const index = this.find(e);
+    if (index !== -1) {
+      return this.remove(index);
+    }
+  }
+  // 自定义输出
+  toString() {
+    return `数组是：${this.getArray()}，包含${this.size}个元素。`
+  }
 };
 
 const arr = new CustomArray(15);
@@ -67,3 +134,7 @@ console.log('当前数组对象：', arr.getArray());
 console.log('在头添加一个元素6', arr.addFirst(6));
 console.log('在尾添加一个元素2', arr.addLast(2));
 console.log('当前数组对象:', arr.getArray());
+console.log('第6个元素是：', arr.get(6));
+arr.set(6, 2.2);
+console.log('设置第6个元素为2.2', arr.getArray());
+console.log('这个数组的信息：', arr.toString());
